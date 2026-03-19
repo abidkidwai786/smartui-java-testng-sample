@@ -20,18 +20,25 @@ public class SmartUISDKCloud {
     private RemoteWebDriver driver;
     private String Status = "failed";
     private String githubURL = System.getenv("GITHUB_URL");
+    private String buildName = System.getenv("BUILD_NAME");
 
     @BeforeMethod
     public void setup(Method m, ITestContext ctx) throws MalformedURLException {
         String username = System.getenv("LT_USERNAME") == null ? "Your LT Username" : System.getenv("LT_USERNAME");
         String authkey = System.getenv("LT_ACCESS_KEY") == null ? "Your LT AccessKey" : System.getenv("LT_ACCESS_KEY");
         String hub = "@hub.lambdatest.com/wd/hub";
+        //String buildName = System.getenv("BUILD_NAME");
+
+
 
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("platform", "Catalina");
         caps.setCapability("browserName", "chrome");
         caps.setCapability("version", "latest");
-        caps.setCapability("build", "TestNG With Java");
+        caps.setCapability("build", buildName);
+        caps.setCapability("smartUI.project", "UHG Debug");
+        caps.setCapability("smartUI.build", buildName);
+
         caps.setCapability("name", m.getName() + " - " + this.getClass().getName());
         
         if (githubURL != null) {
