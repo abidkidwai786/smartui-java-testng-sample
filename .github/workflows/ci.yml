@@ -8,7 +8,7 @@ on:
 env:
   LT_USERNAME: ${{ secrets.LT_USERNAME }}
   LT_ACCESS_KEY: ${{ secrets.LT_ACCESS_KEY }}
-  BUILD_NAME: "TestNG-${{ github.run_number }}"
+  BUILD_NAME: "TestNG-${{ github.run_id }}"
 #  PROJECT_TOKEN: ${{ secrets.PROJECT_TOKEN }}
 #  LT_SDK_DEBUG: true
 #  SMARTUI_DEBUG: true
