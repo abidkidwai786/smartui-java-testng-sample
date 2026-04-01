@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -20,7 +21,11 @@ public class SmartUISDKCloud {
     private RemoteWebDriver driver;
     private String Status = "failed";
     private String githubURL = System.getenv("GITHUB_URL");
-    private String buildName = System.getenv("BUILD_NAME");
+    //private String buildName = System.getenv("BUILD_NAME");
+    private String runId = System.getenv("GITHUB_RUN_ID");
+
+
+//    private String buildName = runId;
 
     @BeforeMethod
     public void setup(Method m, ITestContext ctx) throws MalformedURLException {
@@ -29,15 +34,20 @@ public class SmartUISDKCloud {
         String hub = "@hub.lambdatest.com/wd/hub";
         //String buildName = System.getenv("BUILD_NAME");
 
+        if (runId == null) {
+            // fallback random number
+            runId = String.valueOf(ThreadLocalRandom.current().nextLong(1_000_000, 9_999_999));
+        }
+
 
 
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("platform", "Catalina");
         caps.setCapability("browserName", "chrome");
         caps.setCapability("version", "latest");
-        caps.setCapability("build", buildName);
-        caps.setCapability("smartUI.project", "UHG Debug");
-        caps.setCapability("smartUI.build", buildName);
+        caps.setCapability("build", runId);
+        caps.setCapability("smartUI.project", "UHG Debug 1-4");
+        caps.setCapability("smartUI.build", runId);
 
         caps.setCapability("name", m.getName() + " - " + this.getClass().getName());
         
