@@ -24,6 +24,9 @@ public class SmartUISDKCloud {
     private String buildName = System.getenv("BUILD_NAME");
 
 
+    //private String buildName = System.getenv("BUILD_NAME");
+
+
 //    private String buildName = runId;
 
     @BeforeMethod
@@ -40,13 +43,19 @@ public class SmartUISDKCloud {
 
 
 
+        System.setProperty("build", "DMP_Optum5_Regressiontestsuite_" + buildName);
+        String buildN = System.getProperty("build");
+
+
+
+
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability("platform", "Catalina");
         caps.setCapability("browserName", "chrome");
         caps.setCapability("version", "latest");
-        caps.setCapability("build", buildName);
+        caps.setCapability("build", buildN);
         caps.setCapability("smartUI.project", "UHG Debug 1-4");
-        caps.setCapability("smartUI.build", buildName);
+        caps.setCapability("smartUI.build", buildN);
 
         caps.setCapability("name", m.getName() + " - " + this.getClass().getName());
         
